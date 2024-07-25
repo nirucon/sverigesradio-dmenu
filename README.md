@@ -15,12 +15,12 @@ This Bash script allows users to play live radio streams from Sveriges Radio usi
 
 ## Usage
 
-- Save the Script: Save the script to a directory of your choice, preferably a directory where you keep scripts for dmenu, such as /usr/local/bin.
+- Save: Save the script to a directory of your choice, preferably a directory where you keep scripts for dmenu, such as /usr/local/bin.
 - Make the script executable so that you can run it directly from the command line: chmod +x /usr/local/bin/sverigesradio-dmenu
-- Run the Script: Execute the script from a terminal.
+- Execute the script from dmenu or terminal
 - Choose an Option: Use dmenu to select a radio station or an action. The menu displays options in a user-friendly list.
 - Playback: After selecting a station, mpv will start streaming the radio channel. A notification will pop up for the first five channels indicating the current selection.
-- Control: You can stop playback by selecting "Kill MPV" or exit the script by selecting "Exit."
+- Control: You can stop playback by selecting "Kill MPV" or exit the script by selecting "Exit".
 
 ## Example
 
