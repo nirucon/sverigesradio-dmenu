@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+#
+# Script name: sverigesradio
+# Description: Play Swedish national radio (SR) with mpv
+# Contributors: Nicklas Rudolfsson, n@rudolfsson.net
+# Note: P4 is P4 Väst in this case
+# Dependency: mpv, notify-send
+
+set -euo pipefail
+
+# Define radio stations and actions
+declare -A options=(
+    ["P1"]="https://sverigesradio.se/topsy/direkt/132-hi-mp3.m3u"
+    ["P2"]="https://sverigesradio.se/topsy/direkt/2562-hi-mp3.m3u"
+    ["P3"]="https://sverigesradio.se/topsy/direkt/164-hi-mp3.m3u"
+    ["P4"]="https://sverigesradio.se/topsy/direkt/219-hi-mp3.m3u"
+    ["Ekot-direkt"]="https://sverigesradio.se/topsy/direkt/4540-hi-mp3.m3u"
+    ["Kill MPV"]="pkill mpv"
+    ["Exit"]="exit 0"
+)
+
+# Display options in the specified order
+order=("P1" "P2" "P3" "P4" "Ekot-direkt" "Kill MPV" "Exit")
+
+# Format the options for dmenu
+formatted_options=$(printf '%s\n' "${order[@]}")
+
+# Show dmenu and get user choice
+choice=$(echo "$formatted_options" | dmenu -i -p 'Radio control:' "$@")
+
+# Function to send a notification
+send_notification() {
+    local message="$1"
+    notify-send "Sveriges Radio" "$message" -t 5000
+}
+
+# Check if the choice is valid and execute the corresponding action
+if [[ -n "${options[$choice]+x}" ]]; then
+    if [[ "$choice" == "Exit" ]]; then
+        echo "Program terminated."
+        exit 0
+    elif [[ "$choice" == "Kill MPV" ]]; then
+        eval "${options[$choice]}"
+    else
+        # Send notification for the first five choices
+        if [[ "$choice" == "P1" || "$choice" == "P2" || "$choice" == "P3" || "$choice" == "P4" || "$choice" == "Ekot-direkt" ]]; then
+            send_notification "Now playing Sveriges Radio $choice"
+        fi
+
+        # Execute mpv with error handling
+        echo "Playing ${choice}..."
+        mpv "${options[$choice]}" || { echo "Failed to play ${choice}. Check the URL or mpv installation."; exit 1; }
+    fi
+else
+    echo "Invalid choice."
+    exit 1
+fi
