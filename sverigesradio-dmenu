@@ -31,7 +31,7 @@ choice=$(echo "$formatted_options" | dmenu -i -p 'Radio control:' "$@")
 # Function to send a notification
 send_notification() {
     local message="$1"
-    notify-send "Sveriges Radio" "$message" -t 5000
+    notify-send -u normal -t 5000 -a "Sveriges Radio" "$message"
 }
 
 # Check if the choice is valid and execute the corresponding action
@@ -41,15 +41,20 @@ if [[ -n "${options[$choice]+x}" ]]; then
         exit 0
     elif [[ "$choice" == "Kill MPV" ]]; then
         eval "${options[$choice]}"
+        exit 0
     else
-        # Send notification for the first five choices
-        if [[ "$choice" == "P1" || "$choice" == "P2" || "$choice" == "P3" || "$choice" == "P4" || "$choice" == "Ekot-direkt" ]]; then
-            send_notification "Now playing Sveriges Radio $choice"
-        fi
-
-        # Execute mpv with error handling
+        # Start mpv in the background
         echo "Playing ${choice}..."
-        mpv "${options[$choice]}" || { echo "Failed to play ${choice}. Check the URL or mpv installation."; exit 1; }
+        mpv "${options[$choice]}" > /dev/null 2>&1 &
+
+        # Get the PID of the last background command (mpv)
+        MPV_PID=$!
+
+        # Send notification
+        send_notification "Now playing Sveriges Radio $choice"
+
+        # Wait for mpv to exit
+        wait "$MPV_PID"
     fi
 else
     echo "Invalid choice."
