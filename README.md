@@ -1,6 +1,6 @@
 # sverigesradio-dmenu
 
-Also check https://github.com/nirucon/srpod-dmenu
+Also check https://github.com/nirucon/srpod-dmenu (for SR pod search/play) 
 
 ## Purpose
 This Bash script allows users to play live radio streams from Sveriges Radio using the mpv media player. The script provides a menu-driven interface through dmenu, enabling users to select from various Swedish national radio channels or control the mpv player.
