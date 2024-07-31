@@ -20,7 +20,7 @@ declare -A options=(
 )
 
 # Display options in the specified order
-order=("P1" "P2" "P3" "P4" "Ekot-direkt" "Kill MPV" "Exit")
+order=("P1" "P2" "P3" "P4" "Ekot-direkt" "Turn off" "Exit")
 
 # Format the options for dmenu
 formatted_options=$(printf '%s\n' "${order[@]}")
@@ -39,7 +39,7 @@ if [[ -n "${options[$choice]+x}" ]]; then
     if [[ "$choice" == "Exit" ]]; then
         echo "Program terminated."
         exit 0
-    elif [[ "$choice" == "Kill MPV" ]]; then
+    elif [[ "$choice" == "Turn off" ]]; then
         eval "${options[$choice]}"
         exit 0
     else
