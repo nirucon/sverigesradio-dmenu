@@ -15,7 +15,7 @@ declare -A options=(
     ["P3"]="https://sverigesradio.se/topsy/direkt/164-hi-mp3.m3u"
     ["P4"]="https://sverigesradio.se/topsy/direkt/219-hi-mp3.m3u"
     ["Ekot-direkt"]="https://sverigesradio.se/topsy/direkt/4540-hi-mp3.m3u"
-    ["Turn off"]="pkill mpv"
+    ["Turn off"]="killall mpv"
     ["Exit"]="exit 0"
 )
 
