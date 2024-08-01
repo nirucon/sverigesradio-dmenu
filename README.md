@@ -28,3 +28,7 @@ This Bash script allows users to play live radio streams from Sveriges Radio usi
 ## Example
 
 Upon choosing "P1", the script will start streaming Sveriges Radio P1 using mpv, and a notification will appear stating "Now playing Sveriges Radio P1."
+
+## License
+
+Feel free to use and modify, donate if you want :) https://www.paypal.com/paypalme/nicklasrudolfsson
